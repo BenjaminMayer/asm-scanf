@@ -9,6 +9,7 @@ global _start
 
 _start:
     ; Affiche le message de saisie
+    mov esi, 0
     mov eax, 4       ; syscall pour afficher un message
     mov ebx, 1       ; stdout
     mov ecx, msg     ; pointeur vers le message
@@ -31,11 +32,14 @@ _start:
     ; Gère la touche pressée
     process_input:
         mov ecx, ax      ; la touche pressée
+        mov byte [buffer+esi], ax
+        inc esi
         mov eax, 4       ; syscall pour afficher un message
         mov ebx, 1       ; stdout
         
         mov edx, 1       ; longueur du message
         int 0x80         ; appelle le noyau
+        
 
         ; Attendre à nouveau
         jmp wait_for_input
