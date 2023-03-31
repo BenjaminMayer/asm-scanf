@@ -19,6 +19,7 @@ _start:
 
     ; Boucle d'attente pour les interruptions clavier
     wait_for_input:
+        
         mov ah, 0    ; interruption 16h pour la gestion clavier
         int 0x16         ; appelle le noyau
 
@@ -42,6 +43,7 @@ _start:
         
 
         ; Attendre à nouveau
-        jmp wait_for_input
+        cmp esi,255
+        jne wait_for_input
     end:
         ret
